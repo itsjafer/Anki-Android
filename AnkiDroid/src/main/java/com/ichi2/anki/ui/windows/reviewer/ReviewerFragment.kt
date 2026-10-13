@@ -61,6 +61,7 @@ import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.reviewer.performReviewHaptic
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
@@ -200,7 +201,10 @@ class ReviewerFragment :
 
         viewModel.showingAnswer.collectIn(lifecycleScope) { showingAnswer ->
             // reset zoom if flipped
-            if (showingAnswer) reviewerWebViewClient.resetZoom()
+            if (showingAnswer) {
+                binding.root.performReviewHaptic()
+                reviewerWebViewClient.resetZoom()
+            }
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
             binding.rootLayout.requestFocus()
@@ -229,8 +233,9 @@ class ReviewerFragment :
 
         binding.webViewContainer.setFrameStyle()
 
-        if (Prefs.showAnswerFeedback) {
-            viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
+        viewModel.answerFeedbackFlow.collectIn(lifecycleScope) { ease ->
+            binding.root.performReviewHaptic()
+            if (Prefs.showAnswerFeedback) {
                 val drawableId =
                     when (ease) {
                         Rating.AGAIN -> R.drawable.ic_ease_again

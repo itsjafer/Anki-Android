@@ -143,6 +143,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
+import com.ichi2.anki.reviewer.performReviewHaptic
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
@@ -872,6 +873,7 @@ abstract class AbstractFlashcardViewer :
                     // workaround for a broken ReviewerKeyboardInputTest
                     return@launchCatchingTask
                 }
+                window?.decorView?.performReviewHaptic()
                 // Temporarily sets the answer indicator dots appearing below the toolbar
                 previousAnswerIndicator?.displayAnswerIndicator(rating)
                 stopCardMediaPlayer()
@@ -1388,6 +1390,10 @@ abstract class AbstractFlashcardViewer :
         // prevent answering (by e.g. gestures) before card is loaded
         if (currentCard == null) {
             return
+        }
+
+        if (!displayAnswer) {
+            window?.decorView?.performReviewHaptic()
         }
 
         // TODO needs testing: changing a card's model without flipping it back to the front

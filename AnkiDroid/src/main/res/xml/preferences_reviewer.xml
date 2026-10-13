@@ -59,6 +59,14 @@
             />
 
         <SwitchPreferenceCompat
+            android:key="@string/haptic_feedback_preference"
+            android:title="@string/pref_haptic_feedback"
+            android:summary="@string/pref_haptic_feedback_summ"
+            android:defaultValue="true"
+            android:icon="@drawable/ic_touch"
+            />
+
+        <SwitchPreferenceCompat
             android:key="@string/show_progress_preference"
             tools:title="Show remaining card count"
             android:defaultValue="true"

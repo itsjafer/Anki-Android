@@ -42,5 +42,10 @@
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/haptic_feedback_preference"
+            android:summary="@string/pref_haptic_feedback_summ"
+            android:title="@string/pref_haptic_feedback" />
     </PreferenceCategory>
 </PreferenceScreen>
